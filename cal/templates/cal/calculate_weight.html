@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weight Calculation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #D1E9FE;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #4A4A4A;
+        }
+        h2 {
+            color: #666;
+        }
+        #weight-form {
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 300px;
+            background-color: #ffeb3b; /* Yellow background for input */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50; /* Dark green background for header */
+            color: white;
+        }
+        td {
+            background-color: #fff;
+        }
+        td.weight {
+            background-color: #ffeb3b; /* Yellow background for weight column */
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Light gray for even rows */
+        }
+        tr:hover {
+            background-color: #d1e7fd; /* Light blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Safety Squat Bar Back Squat</h1>
+    <h2>Based off of: 1RM Safety Squat Bar Back Squat</h2>
+    <form method="POST" id="weight-form">
+        {% csrf_token %}
+        <label for="weight">1RM---></label>
+        <input type="number" id="weight" name="weight" value="{{ weight }}" oninput="this.form.submit()" required>
+    </form>
+
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Set #</th>
+                <th>Reps</th>
+                <th class="weight">Weight</th> <!-- Weight column with a class for styling -->
+                <th>Min in W/O</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.set_number }}</td>
+                    <td>{{ result.reps }}</td>
+                    <td class="weight">{{ result.weight }}</td> <!-- Display weight with styling -->
+                    <td>{{ result.min_in_w_o }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
